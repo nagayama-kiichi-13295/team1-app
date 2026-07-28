@@ -13,6 +13,10 @@ class MatchingController extends Controller
         $userId = session('user_id');
         $characterId = session('character_id');
 
+        if (!$userId || !$characterId) {
+
+            return redirect('/character');
+        }
 
         // 自分が参加している部屋を探す
         $myRoom = Room::where('host_user_id', $userId)
@@ -32,7 +36,6 @@ class MatchingController extends Controller
             if ($battle) {
 
                 return redirect('/battle/' . $myRoom->id);
-
             }
         }
 
@@ -61,7 +64,6 @@ class MatchingController extends Controller
 
 
             return view('matching');
-
         }
 
 
@@ -97,7 +99,13 @@ class MatchingController extends Controller
                 $room->guest_character_id
             );
 
+            // どちらかのキャラが取得できない不正な部屋は破棄してやり直し
+            if (!$player1 || !$player2) {
 
+                $room->delete();
+
+                return redirect('/character');
+            }
 
             /*
             |--------------------------------------------------------------------------
@@ -139,23 +147,21 @@ class MatchingController extends Controller
 
 
                 'player1_character_id' =>
-                    $room->host_character_id,
+                $room->host_character_id,
 
 
                 'player2_character_id' =>
-                    $room->guest_character_id,
+                $room->guest_character_id,
 
             ]);
 
 
 
             return redirect('/battle/' . $room->id);
-
         }
 
 
 
         return view('matching');
-
     }
 }
