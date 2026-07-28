@@ -1,0 +1,150 @@
+/* =========================================
+   プレイヤー名入力（タイトル）画面
+   battle.css / character.css と同じ配色
+   ========================================= */
+
+.player-page {
+    background: #1e293b;
+    color: #f1f5f9;
+    font-family: sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+
+    /* 上下左右中央に配置 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* --- 中央のパネル --- */
+
+.title-panel {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 32px;
+    border-radius: 18px;
+    background: #334155;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+
+/* --- タイトルロゴ --- */
+
+.game-title {
+    font-size: 38px;
+    line-height: 1.2;
+    margin: 0;
+    letter-spacing: 2px;
+    color: #f8fafc;
+    text-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+}
+
+.game-title .title-accent {
+    color: #38bdf8;
+}
+
+.game-subtitle {
+    margin: 10px 0 32px;
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: #94a3b8;
+}
+
+
+/* --- 入力欄 --- */
+
+.name-label {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    color: #cbd5e1;
+    margin-bottom: 8px;
+}
+
+.name-input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    color: #f1f5f9;
+    background: #1e293b;
+    border: 2px solid #475569;
+    border-radius: 10px;
+    box-sizing: border-box;
+    outline: none;
+    transition: 0.2s;
+}
+
+.name-input::placeholder {
+    color: #64748b;
+}
+
+.name-input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+
+/* --- エラー表示 --- */
+
+.error-box {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid #ef4444;
+    color: #fca5a5;
+    font-size: 13px;
+    text-align: left;
+}
+
+.error-box p {
+    margin: 0;
+}
+
+.error-box p + p {
+    margin-top: 6px;
+}
+
+
+/* --- 開始ボタン --- */
+
+.start-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    color: white;
+    background: #3b82f6;
+    transition: 0.2s;
+}
+
+.start-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+}
+
+.start-btn:active {
+    transform: translateY(0);
+}
+
+
+/* --- スマホ向け --- */
+
+@media (max-width: 480px) {
+
+    .title-panel {
+        padding: 32px 22px;
+    }
+
+    .game-title {
+        font-size: 30px;
+    }
+}
