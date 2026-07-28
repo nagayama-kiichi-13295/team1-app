@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Skill extends Model
 {
     public $timestamps = false;
 
     protected $fillable = [
-        'user_name',
+        'skill_name',
+        'power',
+        'mp_cost',
     ];
 }
