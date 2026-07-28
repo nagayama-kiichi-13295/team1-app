@@ -33,7 +33,8 @@ class MatchingController extends Controller
                 $myRoom->id
             )->first();
 
-            if ($battle) {
+            // 決着していないバトルだけ復帰させる
+            if ($battle && !$battle->winner_user_id) {
 
                 return redirect('/battle/' . $myRoom->id);
             }
