@@ -33,6 +33,23 @@
                         required
                     >
 
+                    <div class="character-image">
+
+                        @if($character->image)
+
+                            <img
+                                src="{{ asset('images/characters/' . $character->image) }}"
+                                alt="{{ $character->character_name }}"
+                            >
+
+                        @else
+
+                            <div class="no-image">NO IMAGE</div>
+
+                        @endif
+
+                    </div>
+
                     <h3 class="character-name">
                         {{ $character->character_name }}
                     </h3>
@@ -45,7 +62,7 @@
                         <div class="stat-bar">
                             <div
                                 class="stat-fill"
-                                style="width: {{ min($character->hp / 2, 100) }}%;"
+                                style="width: {{ min($character->hp / 1500 * 100, 100) }}%;"
                             ></div>
                         </div>
                     </div>
@@ -58,7 +75,7 @@
                         <div class="stat-bar">
                             <div
                                 class="stat-fill"
-                                style="width: {{ min($character->attack, 100) }}%;"
+                                style="width: {{ min($character->attack / 200 * 100, 100) }}%;"
                             ></div>
                         </div>
                     </div>
@@ -71,7 +88,7 @@
                         <div class="stat-bar">
                             <div
                                 class="stat-fill"
-                                style="width: {{ min($character->defense, 100) }}%;"
+                                style="width: {{ min($character->defense / 150 * 100, 100) }}%;"
                             ></div>
                         </div>
                     </div>
@@ -84,7 +101,7 @@
                         <div class="stat-bar">
                             <div
                                 class="stat-fill"
-                                style="width: {{ min($character->speed, 100) }}%;"
+                                style="width: {{ min($character->speed / 200 * 100, 100) }}%;"
                             ></div>
                         </div>
                     </div>
@@ -97,7 +114,7 @@
                         <div class="stat-bar">
                             <div
                                 class="stat-fill"
-                                style="width: {{ min($character->intelligence, 100) }}%;"
+                                style="width: {{ min($character->intelligence / 150 * 100, 100) }}%;"
                             ></div>
                         </div>
                     </div>
