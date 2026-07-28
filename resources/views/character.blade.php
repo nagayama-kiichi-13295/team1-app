@@ -1,45 +1,121 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>キャラクター選択</title>
+
+    @vite([
+        'resources/js/app.js'
+    ])
 </head>
-<body>
+<body class="character-page">
 
     <h1>キャラクター選択</h1>
+
+    <p class="character-lead">
+        使用するバケモンを選んでください
+    </p>
 
     <form action="/character" method="POST">
         @csrf
 
-        @foreach($characters as $character)
+        <div class="character-list">
 
-            <div style="border:1px solid black; margin:10px; padding:10px;">
+            @foreach($characters as $character)
 
-                <input
-                    type="radio"
-                    name="character_id"
-                    value="{{ $character->id }}"
-                    required
-                >
+                <label class="character-card">
 
-                <h3>{{ $character->character_name }}</h3>
+                    <input
+                        type="radio"
+                        name="character_id"
+                        value="{{ $character->id }}"
+                        required
+                    >
 
-                <p>HP : {{ $character->hp }}</p>
+                    <h3 class="character-name">
+                        {{ $character->character_name }}
+                    </h3>
 
-                <p>攻撃 : {{ $character->attack }}</p>
+                    <div class="stat-row stat-hp">
+                        <div class="stat-label">
+                            <span>HP</span>
+                            <span>{{ $character->hp }}</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div
+                                class="stat-fill"
+                                style="width: {{ min($character->hp / 2, 100) }}%;"
+                            ></div>
+                        </div>
+                    </div>
 
-                <p>防御 : {{ $character->defense }}</p>
+                    <div class="stat-row stat-attack">
+                        <div class="stat-label">
+                            <span>攻撃</span>
+                            <span>{{ $character->attack }}</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div
+                                class="stat-fill"
+                                style="width: {{ min($character->attack, 100) }}%;"
+                            ></div>
+                        </div>
+                    </div>
 
-                <p>素早さ : {{ $character->speed }}</p>
+                    <div class="stat-row stat-defense">
+                        <div class="stat-label">
+                            <span>防御</span>
+                            <span>{{ $character->defense }}</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div
+                                class="stat-fill"
+                                style="width: {{ min($character->defense, 100) }}%;"
+                            ></div>
+                        </div>
+                    </div>
 
-                <p>知力 : {{ $character->intelligence }}</p>
+                    <div class="stat-row stat-speed">
+                        <div class="stat-label">
+                            <span>素早さ</span>
+                            <span>{{ $character->speed }}</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div
+                                class="stat-fill"
+                                style="width: {{ min($character->speed, 100) }}%;"
+                            ></div>
+                        </div>
+                    </div>
 
-            </div>
+                    <div class="stat-row stat-intelligence">
+                        <div class="stat-label">
+                            <span>知力</span>
+                            <span>{{ $character->intelligence }}</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div
+                                class="stat-fill"
+                                style="width: {{ min($character->intelligence, 100) }}%;"
+                            ></div>
+                        </div>
+                    </div>
 
-        @endforeach
+                    <div class="selected-mark">
+                        ◆ 選択中
+                    </div>
 
-        <button type="submit">
+                </label>
+
+            @endforeach
+
+        </div>
+
+        <button type="submit" class="decide-btn">
             キャラクター決定
         </button>
+
     </form>
 
 </body>
