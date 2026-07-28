@@ -35,6 +35,13 @@ Route::post('/attack', function (Request $request) {
 
     $userId = session('user_id');
 
+        // 決着済みなら攻撃を受け付けない（UIだけでなくサーバー側でも止める）
+    if ($battle->winner_user_id) {
+
+        return back();
+
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -751,4 +758,57 @@ turnChange:
     return back();
 
 
+});
+
+Route::post('/rematch', function (Request $request) {
+
+    $battle = Battle::where(
+        'room_id',
+        $request->room_id
+    )->first();
+
+    if (!$battle) {
+
+        return back();
+
+    }
+
+    $room = \App\Models\Room::find(
+        $battle->room_id
+    );
+
+    $player1 = Character::find(
+        $battle->player1_character_id
+    );
+
+    $player2 = Character::find(
+        $battle->player2_character_id
+    );
+
+
+    // Battle作成時（MatchingController）と同じ初期値に戻す
+    $battle->player1_hp = $player1->hp;
+    $battle->player2_hp = $player2->hp;
+
+    $battle->player1_mp = 50;
+    $battle->player2_mp = 50;
+
+    $battle->player1_attack_buff = 0;
+    $battle->player2_attack_buff = 0;
+    $battle->player1_defense_buff = 0;
+    $battle->player2_defense_buff = 0;
+
+    $battle->turn_player = $room->host_user_id;
+    $battle->winner_user_id = null;
+    $battle->last_message = '再戦！';
+
+    $battle->save();
+
+
+    broadcast(
+        new BattleUpdated($battle)
+    );
+
+
+    return back();
 });
