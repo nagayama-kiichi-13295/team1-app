@@ -1,38 +1,212 @@
-body {
+/* =========================================
+   バトル画面（ポケモン風レイアウト）
+   ========================================= */
+
+.battle-page {
     background: #1e293b;
-    color: white;
+    color: #f1f5f9;
     font-family: sans-serif;
-    text-align: center;
+    margin: 0;
+    padding: 16px;
+    box-sizing: border-box;
+    min-height: 100vh;
 }
 
-.player-card {
-    width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 15px;
-    background: #334155;
+.battle-screen {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+
+/* ================= フィールド ================= */
+
+.field {
+    position: relative;
+    padding: 18px;
+    border-radius: 16px;
+    border: 3px solid #475569;
+
+    /* 奥が明るい草原、手前が暗い床のイメージ */
+    background:
+        linear-gradient(
+            to bottom,
+            #7dd3a0 0%,
+            #5cb87f 45%,
+            #3f8f60 46%,
+            #2f6b48 100%
+        );
+}
+
+.side {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 相手は上段：ステータス左 / 画像右 */
+.side-enemy {
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+/* 自分は下段：画像左 / ステータス右 */
+.side-mine {
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+
+/* ---- モンスター（画像） ---- */
+
+.monster {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.monster img {
+    position: relative;
+    z-index: 2;
+    display: block;
+    object-fit: contain;
+    /* 輪郭を出して背景から浮かせる */
+    filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.45));
+}
+
+/* 相手は奥にいるので少し小さい */
+.monster-enemy img {
+    width: 130px;
+    height: 130px;
+}
+
+/* 自分は手前なので大きい */
+.monster-mine img {
+    width: 165px;
+    height: 165px;
+}
+
+/* 足元の楕円の台 */
+.platform {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.22);
+}
+
+.monster-enemy .platform {
+    width: 120px;
+    height: 26px;
+}
+
+.monster-mine .platform {
+    width: 155px;
+    height: 32px;
+}
+
+.no-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    color: #e2e8f0;
+    font-size: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ---- ステータスボックス ---- */
+
+.status-box {
+    width: 250px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 3px solid #1e293b;
+    background: #f8fafc;
+    color: #1e293b;
+    box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.25);
+}
+
+.status-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.status-char {
+    font-size: 11px;
+    font-weight: normal;
+    color: #64748b;
+}
+
+.hp-line,
+.mp-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.hp-label,
+.mp-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #b45309;
+    width: 20px;
+}
+
+.mp-label {
+    color: #1d4ed8;
 }
 
 .hp-bar {
-    width: 300px;
-    height: 25px;
-    margin: auto;
-    background: #555;
+    flex: 1;
+    height: 10px;
+    background: #cbd5e1;
     border-radius: 20px;
     overflow: hidden;
 }
 
 .hp-fill {
     height: 100%;
+    border-radius: 20px;
+    transition: width 0.4s;
+}
+
+/* 残量で色を変える */
+.hp-high {
     background: #22c55e;
-    transition: 0.3s;
+}
+
+.hp-mid {
+    background: #f59e0b;
+}
+
+.hp-low {
+    background: #ef4444;
+}
+
+.hp-text {
+    text-align: right;
+    font-size: 12px;
+    margin: 3px 0 5px;
+    color: #334155;
 }
 
 .mp-bar {
-    width: 300px;
-    height: 20px;
-    margin: auto;
-    background: #555;
+    flex: 1;
+    height: 7px;
+    background: #cbd5e1;
     border-radius: 20px;
     overflow: hidden;
 }
@@ -40,57 +214,275 @@ body {
 .mp-fill {
     height: 100%;
     background: #3b82f6;
-    transition: 0.3s;
+    border-radius: 20px;
+    transition: width 0.4s;
 }
 
-.log {
-    background: black;
-    color: yellow;
-    width: 600px;
-    margin: 20px auto;
-    padding: 15px;
+.mp-text {
+    font-size: 11px;
+    color: #334155;
+    width: 22px;
+    text-align: right;
+}
+
+
+/* ---- バフ表示 ---- */
+
+.buff-line {
+    margin-top: 6px;
+    display: flex;
+    gap: 5px;
+}
+
+.buff {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 20px;
+    color: white;
+}
+
+.buff.atk {
+    background: #ef4444;
+}
+
+.buff.def {
+    background: #f59e0b;
+}
+
+
+/* ================= メッセージ ================= */
+
+.message-box {
+    margin: 14px 0;
+    padding: 18px 20px;
+    min-height: 26px;
+    border-radius: 12px;
+    border: 3px solid #475569;
+    background: #0f172a;
+    color: #fde68a;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+
+/* ================= コマンド ================= */
+
+.command-box {
+    padding: 14px;
+    border-radius: 12px;
+    border: 3px solid #475569;
+    background: #334155;
+}
+
+.turn-label {
+    margin: 0 0 12px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.my-turn {
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+.wait-turn {
+    color: #94a3b8;
+    margin: 6px 0;
+}
+
+/* 待機中のドット */
+.wait-dots {
+    display: inline-flex;
+    gap: 4px;
+    margin-left: 6px;
+}
+
+.wait-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #94a3b8;
+    animation: blink 1.4s ease-in-out infinite;
+}
+
+.wait-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.wait-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+
+    0%, 80%, 100% {
+        opacity: 0.2;
+    }
+
+    40% {
+        opacity: 1;
+    }
+}
+
+
+/* ---- コマンドの並び ---- */
+
+.command-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.cmd {
+    padding: 14px 10px;
+    border: none;
     border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    transition: 0.15s;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 }
 
-button {
-    padding: 12px 20px;
-    margin: 5px;
+.cmd-name {
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.cmd-cost {
+    font-size: 11px;
+    opacity: 0.85;
+}
+
+.cmd:hover:not(:disabled) {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.cmd:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* MP不足で押せないとき */
+.cmd:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.cmd-attack {
+    background: #ef4444;
+}
+
+.cmd-heal {
+    background: #10b981;
+}
+
+.cmd-buff {
+    background: #f59e0b;
+}
+
+/* 必殺技は横幅いっぱい */
+.cmd-special {
+    grid-column: 1 / -1;
+    background: linear-gradient(90deg, #8b5cf6, #d946ef);
+}
+
+
+/* ================= 決着 ================= */
+
+.result {
+    margin-top: 16px;
+    padding: 26px;
+    border-radius: 12px;
+    border: 3px solid #475569;
+    background: #334155;
+    text-align: center;
+}
+
+.win {
+    color: #fbbf24;
+    font-size: 38px;
+    margin: 0 0 18px;
+    text-shadow: 0 0 18px rgba(251, 191, 36, 0.6);
+}
+
+.lose {
+    color: #94a3b8;
+    font-size: 32px;
+    margin: 0 0 18px;
+}
+
+.rematch-btn {
+    padding: 14px 34px;
     border: none;
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.8;
-}
-
-.attack-btn {
-    background: #ef4444;
     color: white;
+    background: #3b82f6;
+    transition: 0.2s;
 }
 
-.skill-btn {
-    background: #8b5cf6;
-    color: white;
+.rematch-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
 }
 
-.heal-btn {
-    background: #10b981;
-    color: white;
+.lobby-link {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 13px;
+    color: #94a3b8;
+    text-decoration: none;
+    border-bottom: 1px solid #64748b;
+    padding-bottom: 2px;
 }
 
-.buff-btn {
-    background: #f59e0b;
-    color: white;
+.lobby-link:hover {
+    color: #f1f5f9;
 }
 
-.turn {
-    color: #38bdf8;
-    font-size: 22px;
-}
 
-.win {
-    color: gold;
-    font-size: 40px;
+/* ================= スマホ ================= */
+
+@media (max-width: 640px) {
+
+    .status-box {
+        width: 165px;
+        padding: 8px;
+    }
+
+    .status-name {
+        font-size: 12px;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .monster-enemy img {
+        width: 95px;
+        height: 95px;
+    }
+
+    .monster-mine img {
+        width: 115px;
+        height: 115px;
+    }
+
+    .monster-enemy .platform {
+        width: 88px;
+        height: 20px;
+    }
+
+    .monster-mine .platform {
+        width: 108px;
+        height: 24px;
+    }
+
+    .message-box {
+        font-size: 15px;
+        padding: 14px;
+    }
 }
