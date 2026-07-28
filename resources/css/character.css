@@ -1,0 +1,170 @@
+/* =========================================
+   キャラクター選択画面
+   battle.css と同じ配色に合わせています
+   ========================================= */
+
+.character-page {
+    background: #1e293b;
+    color: #f1f5f9;
+    font-family: sans-serif;
+    text-align: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.character-page h1 {
+    font-size: 32px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.character-lead {
+    color: #94a3b8;
+    font-size: 15px;
+    margin-bottom: 32px;
+}
+
+
+/* --- カード並び --- */
+
+.character-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto 32px;
+}
+
+
+/* --- 1枚のカード --- */
+
+/* ラベル全体をクリック可能にする */
+.character-card {
+    display: block;
+    width: 260px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #334155;
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s;
+}
+
+.character-card:hover {
+    background: #3e4c63;
+    transform: translateY(-4px);
+}
+
+/* ラジオボタンは隠す（カード全体で選択させる） */
+.character-card input[type="radio"] {
+    display: none;
+}
+
+/* 選択中のカードを光らせる */
+.character-card:has(input[type="radio"]:checked) {
+    border-color: #38bdf8;
+    background: #3b4a61;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.5);
+}
+
+.character-name {
+    font-size: 20px;
+    margin: 0 0 16px;
+    text-align: center;
+    color: #f8fafc;
+}
+
+/* 選択中バッジ */
+.character-card .selected-mark {
+    display: none;
+    color: #38bdf8;
+    font-size: 13px;
+    text-align: center;
+    margin-top: 14px;
+}
+
+.character-card:has(input[type="radio"]:checked) .selected-mark {
+    display: block;
+}
+
+
+/* --- ステータス表示 --- */
+
+.stat-row {
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #cbd5e1;
+    margin-bottom: 4px;
+}
+
+.stat-bar {
+    height: 8px;
+    background: #1e293b;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.stat-fill {
+    height: 100%;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+/* 項目ごとに色分け（battle.css と同系色） */
+.stat-hp .stat-fill {
+    background: #22c55e;
+}
+
+.stat-attack .stat-fill {
+    background: #ef4444;
+}
+
+.stat-defense .stat-fill {
+    background: #f59e0b;
+}
+
+.stat-speed .stat-fill {
+    background: #38bdf8;
+}
+
+.stat-intelligence .stat-fill {
+    background: #8b5cf6;
+}
+
+
+/* --- 決定ボタン --- */
+
+.decide-btn {
+    padding: 14px 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    cursor: pointer;
+    background: #3b82f6;
+    color: white;
+    transition: 0.2s;
+}
+
+.decide-btn:hover {
+    opacity: 0.85;
+}
+
+
+/* --- スマホ向け --- */
+
+@media (max-width: 600px) {
+
+    .character-card {
+        width: 100%;
+        max-width: 320px;
+    }
+}
